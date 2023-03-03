@@ -1,0 +1,73 @@
+parent(donald,melaniya).
+parent(ahiya,melaniya).
+parent(donald,andriya).
+parent(ahiya,andriya).
+parent(regan,newton).
+parent(roshi,newton).
+parent(andriya,william).
+parent(newton,william).
+parent(melaniya,harry).
+parent(john,harry).
+
+wife(ahiya,donald).
+wife(roshi,regan).
+wife(melaniya,john).
+wife(andriya,newton).
+
+male(donald).
+male(john).
+male(regan).
+male(newton).
+male(william).
+male(harry).
+female(ahiya).
+female(andriya).
+female(roshi).
+female(melaniya).
+
+mother(X,Y) :- parent(X,Y), female(X).
+father(X,Y) :- parent(X,Y), male(X).
+
+sister(melaniya,andriya).
+sister(X,Y) :- parent(Z,X), parent(Z,Y), female(X), X\==Y.
+brother(X,Y) :- parent(Z,X), parent(Z,Y), male(X), X\==Y.
+
+grandfather(X,Y) :- parent(X,Z), parent(Z,Y), male(X).
+grandmother(X,Y) :- parent(X,Z), parent(Z,Y), female(X).
+grandchildren(X,Y) :- grandfather(Y,X); grandmother(Y,X).
+
+aunt(X,Y) :- sister(X,Z), parent(Z,Y), female(X).
+uncle(X,Y) :- brother(X,Z), parent(Z,Y), male(X).
+
+
+
+
+
+Aim: Write a program to find the length and last element of a given list.
+
+Program:
+
+length(X):- util(X,Count),
+
+    write("The length of list is:"),write(Count).
+     util([],X):- X=0.
+util([_|T],Count):- util(T,Temp), Count is Temp+1.
+
+
+last([X]):-
+    write("The last element of list is: "),write(X).
+    last([_|T]):- last(T).
+
+
+
+
+
+Aim: Write a program to delete the first occurrence and also all occurrences of a particular   element in a given list.
+
+Program:
+
+deleteAll(_,[],[]).
+
+deleteAll(X,[H|T],[H|NT]):- H\=X, deleteAll(X,T,NT).
+
+deleteAll(X,[X|T],NT):- deleteAll(X,T,NT).
